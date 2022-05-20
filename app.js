@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const router = require("./src/router/home/index");
+const path = require("path");
+const ctrl = require("./src/router/home/home.ctrl");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -8,7 +9,10 @@ dotenv.config();
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
 
-app.get("/", router);
-app.get("/login", router);
+app.use(express.static(path.join(`${__dirname}/src/public`)));
+
+app.get("/", ctrl.output.root);
+app.get("/login", ctrl.output.login);
+app.get("/register", ctrl.output.register);
 
 module.exports = app;
